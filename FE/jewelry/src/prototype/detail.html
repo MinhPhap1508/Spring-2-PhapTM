@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="detail.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="scss/bootstrap.scss">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        #hannah .btn-input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0px;
+}
+#hannah .btn-minus,
+#hannah .btn-plus {
+    background-color: lightblue;
+    color: black;
+    font-weight: bold;
+    border: 1px solid whitesmoke !important;
+    width: 38px !important;
+    padding: 5px 5px !important;
+    border-radius: 5px !important;
+    cursor: pointer;
+}
+#hannah .btn-minus:hover,
+#hannah .btn-plus:hover {
+    background-color: orange;
+}
+#hannah .input-quantity::-webkit-outer-spin-button,
+#hannah .input-quantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* iddddd */
+#hannah .btn-in-cart:hover {
+    color: palevioletred;
+}
+#hannah .btn-in-cart {
+    height: 10px;
+    width: 15px;
+    background: none !important;
+    border: none !important;
+    font-weight: bold;
+}
+.carousel-control-next,
+.carousel-control-prev
+    /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
+.paypal-button-number-1 {
+    display: none;
+}
+.paypal-button:nth-of-type(2) {
+    display: none;
+}
+.paypal-button-container:nth-of-type(2),
+.paypal-button-layout-vertical:nth-of-type(2),
+.paypal-button-shape-rect:nth-of-type(2),
+.paypal-button-number-multiple:nth-of-type(2),
+.paypal-button-env-sandbox:nth-of-type(2) {
+    display: none;
+}
+.toast-position {
+    top: 5rem !important;
+}
+
+/* .input-for-quantity::-webkit-outer-spin-button {
+-webkit-appearance: none;
+
+}
+.input-for-quantity{
+  width: 40px !important;
+  border: 1px grey solid !important;
+  text-align: center !important;
+  border-radius: 5px;
+  padding: 0px;
+  margin: 0px;
+} */
+
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col"><h4><b>Product detail</b></h4></div>
+                </div>
+                <div>
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"><img class="justify-content-center d-flex" src="https://ijc.vn/vnt_upload/news/08_2020/su_quyen_ru_cua_trang_suc_da_quy.jpg" width="50" height="20"/></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"><img class="justify-content-center d-flex" src="https://ijc.vn/vnt_upload/news/08_2020/su_quyen_ru_cua_trang_suc_da_quy.jpg" width="50" height="20"/></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"><img class="justify-content-center d-flex" src="https://ijc.vn/vnt_upload/news/08_2020/su_quyen_ru_cua_trang_suc_da_quy.jpg" width="50" height="20"/></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://ijc.vn/vnt_upload/news/08_2020/su_quyen_ru_cua_trang_suc_da_quy.jpg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://cdn.tgdd.vn/hoi-dap/1412495/da-quy-la-gi-10-loai-da-quy-trang-suc-pho-bien-dep-mat-nhat%20(1).png" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://cdn.tgdd.vn/hoi-dap/1412495/da-quy-la-gi-10-loai-da-quy-trang-suc-pho-bien-dep-mat-nhat%20(1).jpg" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="back-to-shop"><a href="#">&leftarrow;<span class="text-muted">Back to shop</span></a></div>
+        </div>
+        <div class="col-md-4 summary">
+            <div><h5><b> information</b></h5></div>
+
+            <button class="btn">CHECKOUT</button>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
