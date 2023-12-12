@@ -8,8 +8,12 @@ public interface IProductDto {
     String getNameProduct();
 
     Integer getPrice();
+    Integer getQuantity();
 
     String getImage();
+    String getDescription();
 
-    String getNameTrademark();
+    String getTrademark();
+    String getType();
+    String getCategory();
 }

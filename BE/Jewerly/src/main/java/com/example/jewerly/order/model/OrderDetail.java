@@ -1,4 +1,4 @@
-package com.example.jewerly.product.model;
+package com.example.jewerly.order.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,14 +7,18 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+@Entity
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nameCategory;
+    private Integer quantityOrder;
+    private Boolean flag;
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Orders orders;
 }

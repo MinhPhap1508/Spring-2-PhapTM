@@ -30,6 +30,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "trademark_id", referencedColumnName = "id")
     private Trademark trademark;
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private Type type;
 
 
 }

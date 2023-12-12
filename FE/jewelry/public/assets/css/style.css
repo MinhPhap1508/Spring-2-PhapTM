@@ -15814,7 +15814,7 @@ input {
 ********************************/
 /*Swiper Sider Important CSS*/
 .swiper-container {
-    width: 100%;
+    width: 30%;
 }
 
 .swiper-button-next.swiper-button-disabled,

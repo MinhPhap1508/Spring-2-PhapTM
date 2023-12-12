@@ -1,7 +1,31 @@
+import { useState } from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { ListHome } from "../service/HomeService";
+import { useEffect } from "react";
+import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Link } from "react-router-dom";
 
 export function Home() {
+
+    const [product, setProduct] = useState([]);
+    const vnd = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    })
+    const getHome = async () => {
+        const res = await ListHome();
+        console.log("home", res);
+        setProduct(res);
+    }
+    useEffect(() => {
+        getHome();
+        document.title = "Minh Pháp Jewerly"
+    }, [])
 
     return (
         <>
@@ -34,67 +58,56 @@ export function Home() {
                             <div className="col-12">
                                 <div className="product-slider-default-1row default-slider-nav-arrow">
                                     {/* Slider main container */}
-                                    <div className="swiper-container product-default-slider-4grid-1row">
+                                    <div className="product-default-slider-4grid-1row">
                                         {/* Additional required wrapper */}
                                         <div className="swiper-wrapper">
+                                            <Swiper
+                                                slidesPerView={2}
+                                                spaceBetween={10}
+                                                freeMode={true}
+                                                autoplay={{
+                                                    delay: 2000,
+                                                    disableOnInteraction: false,
+                                                }}
+                                                pagination={{
+                                                    clickable: true,
+                                                }}
+                                                modules={[FreeMode, Pagination, Autoplay]}
+                                                className="mySwiper"
+                                            />
                                             {/* Start Product Default Single Item */}
-                                            <div className="product-default-single-item product-color--pink swiper-slide">
-                                                <div className="image-box">
-                                                    <a href="product-details-default.html" className="image-link">
-                                                        <img src="https://cdn.pnj.io/images/thumbnails/300/300/detailed/114/gn0000y000143-nhan-kim-tien-vang-18k-pnj-0001.png" alt />
-                                                    </a>
-                                                    <div className="action-link">
-                                                        <div className="action-link-left">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
+                                            {product.map((p) => (
+                                                <SwiperSlide>
+                                                <div className="product-default-single-item product-color--pink swiper-slide">
+
+                                                    <div className="image-box">
+                                                        <Link to={`/product/${p.id}`} className="image-link">
+                                                            <img src={p.image} alt />
+                                                        </Link>
+                                                        <div className="action-link">
+                                                            <div className="action-link-left">
+                                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Thêm vào giỏ hàng</a>
+                                                            </div>
+                                                            <div className="action-link-right">
+                                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i className="icon-magnifier" /></a>
+                                                                <a href="wishlist.html"><i className="icon-heart" /></a>
+                                                                <a href="compare.html"><i className="icon-shuffle" /></a>
+                                                            </div>
                                                         </div>
-                                                        <div className="action-link-right">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i className="icon-magnifier" /></a>
-                                                            <a href="wishlist.html"><i className="icon-heart" /></a>
-                                                            <a href="compare.html"><i className="icon-shuffle" /></a>
+                                                    </div>
+                                                    <div className="content">
+                                                        <div className="content-left">
+                                                            <h6 className="title">{p.nameProduct}</h6>
+                                                        </div>
+                                                        <div className="content-right">
+                                                            <span className="price">{vnd.format(p.price)}</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="content">
-                                                    <div className="content-left">
-                                                        <h6 className="title"><a href="product-details-default.html">Epicuri per
-                                                            lobortis</a></h6>
-                                                    </div>
-                                                    <div className="content-right">
-                                                        <span className="price">$68</span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                </SwiperSlide>
+                                            ))}
                                             {/* End Product Default Single Item */}
-                                            {/* Start Product Default Single Item */}
-                                            <div className="product-default-single-item product-color--pink swiper-slide">
-                                                <div className="image-box">
-                                                    <a href="product-details-default.html" className="image-link">
-                                                        <img src="https://cdn.pnj.io/images/thumbnails/300/300/detailed/103/gmddddw000355-mat-day-chuyen-kim-cuong-vang-trang-14k-pnj-001.png" alt />
-                                                        {/* <img src="https://cdn.pnj.io/images/thumbnails/300/300/detailed/82/gnxmxmw001740-nhan-nam-vang-trang-10k-dinh-da-ecz-swarovski-pnj.png" alt=""> */}
-                                                    </a>
-                                                    <div className="action-link">
-                                                        <div className="action-link-left">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add to Cart</a>
-                                                        </div>
-                                                        <div className="action-link-right">
-                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i className="icon-magnifier" /></a>
-                                                            <a href="wishlist.html"><i className="icon-heart" /></a>
-                                                            <a href="compare.html"><i className="icon-shuffle" /></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="content">
-                                                    <div className="content-left">
-                                                        <h6 className="title"><a href="product-details-default.html">Kaoreet
-                                                            lobortis sagit</a></h6>
-                                                    </div>
-                                                    <div className="content-right">
-                                                        <span className="price">$95.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {/* End Product Default Single Item */}
-                                           
+
                                         </div>
                                     </div>
                                     <div className="swiper-button-prev" />
@@ -106,7 +119,7 @@ export function Home() {
                 </div>
             </div>
 
-<Footer/>
+            <Footer />
         </>
     )
 }
