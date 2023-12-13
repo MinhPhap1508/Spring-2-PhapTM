@@ -38,7 +38,7 @@ public class ProductController {
     }
     @GetMapping("/page-list")
     public ResponseEntity<?> getListProductByHeader(@RequestParam(defaultValue = "0", required = false) Integer page,
-                                                    @RequestParam(defaultValue = "size", required = false) Integer size,
+                                                    @RequestParam(defaultValue = "5", required = false) Integer size,
                                                     @RequestParam(defaultValue = "", required = false) String nameProduct,
                                                     @RequestParam(defaultValue = "",required = false)String nameType,
                                                     @RequestParam(defaultValue = "",required = false)String nameCategory,
