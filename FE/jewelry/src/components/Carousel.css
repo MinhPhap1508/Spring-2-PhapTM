@@ -1,0 +1,6 @@
+.carousel-image {
+    width: 100%; /* Đặt chiều rộng ảnh là 100% để nó điều chỉnh với kích thước của carousel */
+    height: 700px; /* Đặt chiều cao tự động để phù hợp với tỷ lệ khung hình */
+    object-fit: cover; /* Đảm bảo ảnh được điều chỉnh tỷ lệ và không bị kéo dãn */
+
+  }

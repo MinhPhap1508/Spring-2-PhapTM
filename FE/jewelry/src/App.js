@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.js'
 import { Footer } from './components/Footer';
 import { Login } from './components/Login';
 import { Detail } from './components/Detail';
+import { Cart } from './components/Cart';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path='login' element={<Login/>}/>
       <Route path='detail' element={<Detail/>}/>
       <Route path='product/:id' element={<Detail/>}/>
+      <Route path='/cart' element={<Cart/>}/>
     </Routes>
   );
 }

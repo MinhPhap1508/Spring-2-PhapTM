@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Dropdown } from "react-bootstrap";
 import { BsInfoSquare } from "react-icons/bs";
 import { BiLogOut, BiHistory } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import './header.css'
 import { cateList, tradeList, typeList } from "../service/HomeService";
@@ -67,7 +67,7 @@ export function Header() {
                   {/* Start Header Logo */}
                   <div className="header-logo">
                     <div className="logo">
-                      <a href="home.html"><img src="assets/images/logo/logo_black.png" alt /></a>
+                      <a href="/"><img src="assets/images/logo/logo_black.png" alt /></a>
                     </div>
                   </div>
                   {/* End Header Logo */}
@@ -97,8 +97,8 @@ export function Header() {
                               <li className="mega-menu-item">
                                 <a style={{ paddingLeft: "2rem" }} href="#" className="mega-menu-item-title">Chất liệu</a>
                                 <ul className="mega-menu-sub">
-                                  {type.map((t) => (
-                                    <li><a href="#">{t.nameType}</a></li>
+                                  {type.map((t, index) => (
+                                    <li><Link to={`/home/`}>{t.nameType}</Link></li>
                                   ))}
                                 </ul>
                               </li>

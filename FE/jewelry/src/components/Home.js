@@ -9,6 +9,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Link } from "react-router-dom";
+import { MyCarousel } from "./MyCarousel";
 
 export function Home() {
 
@@ -31,7 +32,9 @@ export function Home() {
         <>
             <Header />
             {/* start banner */}
-
+<div>
+    <MyCarousel></MyCarousel>
+</div>
 
 
             {/* end banner */}
@@ -52,7 +55,7 @@ export function Home() {
                     </div>
                 </div>
                 {/* Start Section Content Text Area */}
-                <div className="product-wrapper" data-aos="fade-up" data-aos-delay={0}>
+                <div className="swiper-container product-wrapper" data-aos="fade-up" data-aos-delay={0}>
                     <div className="container">
                         <div className="row">
                             <div className="col-12">
