@@ -27,9 +27,10 @@ public class CartController {
                                      @RequestParam Integer productId){
         Integer cart = cartService.getCartById(username, productId);
 
-//        if(cart != null) {
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        }
+        if(cart != null) {
+            cartService.increaseQuantity(username, productId, quantity);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
         cartService.addCart(quantity, username, productId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

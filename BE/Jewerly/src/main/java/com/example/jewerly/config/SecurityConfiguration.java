@@ -21,6 +21,7 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println("tôi là Pháp ngu");
         http
                 .csrf()
                 .disable()
