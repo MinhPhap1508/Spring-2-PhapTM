@@ -43,6 +43,18 @@ public interface ICartRepository extends JpaRepository<Cart, Integer> {
             "SET c.quantity_cart = c.quantity_cart + :quantity " +
             "WHERE c.product_id = :id AND c.app_user_id = :appId", nativeQuery = true)
     void increaseQuantity(@Param("appId") Integer appId, @Param("id") Integer id, @Param("quantity") Integer quantity);
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE cart c " +
+            "SET c.quantity_cart = c.quantity_cart - 1 " +
+            "WHERE c.product_id = :id AND c.app_user_id = :appId", nativeQuery = true)
+    void decreaseQuantity(@Param("appId") Integer appId, @Param("id") Integer id);
 
+    @Transactional
+    @Modifying
+    @Query(value = " DELETE " +
+            " FROM cart c " +
+            " WHERE c.product_id = :id AND c.app_user_id = :appId ", nativeQuery = true)
+    void deleteCart(Integer id, Integer appId);
 
 }

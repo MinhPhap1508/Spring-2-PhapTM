@@ -39,4 +39,16 @@ public class CartService implements ICartService {
         AppUser appUser = appUserRepository.getAccountByUserName(username);
         cartRepository.increaseQuantity(appUser.getId(), id, quantity);
     }
+
+    @Override
+    public void deleteCart(Integer id, String username) {
+        AppUser appUser = appUserRepository.getAccountByUserName(username);
+        cartRepository.deleteCart(id, appUser.getId());
+    }
+
+    @Override
+    public void decreaseQuantity(String username, Integer id) {
+        AppUser appUser = appUserRepository.getAccountByUserName(username);
+        cartRepository.decreaseQuantity(appUser.getId(), id);
+    }
 }

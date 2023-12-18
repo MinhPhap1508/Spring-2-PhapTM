@@ -22,6 +22,7 @@ export function Detail() {
     }
     useEffect(() => {
         getProduct(param.id);
+        window.scrollTo(0, 320);
     }, [param.id])
     return (
         <>
@@ -36,8 +37,8 @@ export function Detail() {
                                     <div className="breadcrumb-nav breadcrumb-nav-color--black breadcrumb-nav-hover-color--golden">
                                         <nav aria-label="breadcrumb">
                                             <ul>
-                                                <li><a href="home.html">Trang chủ</a></li>
-                                                <li><a href="shop-grid-sidebar-left.html">Cửa hàng</a></li>
+                                                <li><a href="/">Trang chủ</a></li>
+                                                <li><a href="/">Cửa hàng</a></li>
                                                 <li className="active" aria-current="page">Chi tiết sản phẩm</li>
                                             </ul>
                                         </nav>
@@ -82,13 +83,13 @@ export function Detail() {
                                                                 className={index === 0 ? "active" : ""}
                                                                 aria-current="true"
                                                                 aria-label={`Slide ${index + 1}`}
-                                                                style={{ width: 60, height: 70 }}
+                                                                // style={{ width: 60, height: 70 }}
                                                             >
                                                                 <img
                                                                     src={i}
                                                                     alt="..."
-                                                                    className="d-block w-100"
-                                                                    style={{ border: "1px lightskyblue solid" }}
+                                                                    className="d-block"
+                                                                    style={{ border: "1px pink solid" ,margin :"5px",width:"95%"}}
                                                                 />
                                                             </button>
 
@@ -102,15 +103,15 @@ export function Detail() {
                                                     data-bs-target="#carouselExampleIndicators"
                                                     data-bs-slide="prev"
                                                 >
-                                                    <span className="carousel-control-prev-icon" aria-hidden="true" />
-                                                    <span className="visually-hidden">Previous</span>
+                                                    {/* <span className="carousel-control-prev-icon" aria-hidden="true" />
+                                                    <span className="visually-hidden">Previous</span> */}
                                                 </button>
                                                 <button className="carousel-control-next"
                                                     type="button"
                                                     data-bs-target="#carouselExampleIndicators"
                                                     data-bs-slide="next">
-                                                    <span className="carousel-control-next-icon" aria-hidden="true" />
-                                                    <span className="visually-hidden">Next</span>
+                                                    {/* <span className="carousel-control-next-icon" aria-hidden="true" />
+                                                    <span className="visually-hidden">Next</span> */}
                                                 </button>
                                                 {/* <div className="gallery-thumb-arrow swiper-button-next" />
                                                 <div className="gallery-thumb-arrow swiper-button-prev" /> */}

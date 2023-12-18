@@ -47,7 +47,7 @@ export function Header() {
       timer: 1500
     });
     // navigate("/");
-    window.location.reload();
+    // window.location.reload();
   }
   useEffect(() => {
     getUsername();
@@ -80,7 +80,7 @@ export function Header() {
 
                         </li>
                         <li className="has-dropdown has-megaitem">
-                          <a href="product-details-default.html">Cửa hàng <i className="fa fa-angle-down" /></a>
+                          <a href="#">Cửa hàng <i className="fa fa-angle-down" /></a>
                           {/* Mega Menu */}
                           <div className="mega-menu">
                             <ul className="mega-menu-inner">
@@ -89,7 +89,7 @@ export function Header() {
                                 <a style={{ paddingLeft: "2rem" }} href="#" className="mega-menu-item-title">Chủng loại</a>
                                 <ul className="mega-menu-sub">
                                   {cate.map((t) => (
-                                    <li><a href="#">{t.nameCategory}</a></li>
+                                    <li><Link to={`/category/${t.nameCategory}`}>{t.nameCategory}</Link></li>
                                   ))}
                                 </ul>
                               </li>
@@ -97,8 +97,8 @@ export function Header() {
                               <li className="mega-menu-item">
                                 <a style={{ paddingLeft: "2rem" }} href="#" className="mega-menu-item-title">Chất liệu</a>
                                 <ul className="mega-menu-sub">
-                                  {type.map((t, index) => (
-                                    <li><Link to={`/home/`}>{t.nameType}</Link></li>
+                                  {type.map((t) => (
+                                    <li><Link to={`/type/${t.nameType}`}>{t.nameType}</Link></li>
                                   ))}
                                 </ul>
                               </li>
@@ -108,7 +108,7 @@ export function Header() {
                                 <ul className="mega-menu-sub">
 
                                   {trade.map((t) => (
-                                    <li><a href="#">{t.nameTrademark}</a></li>
+                                    <li><Link to={`/trademark/${t.nameTrademark}`}>{t.nameTrademark}</Link></li>
                                   ))}
                                 </ul>
                               </li>
@@ -122,15 +122,7 @@ export function Header() {
                           </div>
                         </li>
 
-                        <li className="has-dropdown">
-                          <a href="#">Trang <i className="fa fa-angle-down" /></a>
-                          {/* Sub Menu */}
-                          <ul className="sub-menu">
-                            <li><a href="faq.html">Câu hỏi thường gặp</a></li>
-                            <li><a href="privacy-policy.html">Chính sách bảo mật</a></li>
-                            <li><a href="404.html">Trang 404</a></li>
-                          </ul>
-                        </li>
+                    
                         <li>
                           <a href="about-us.html">Thông tin thêm</a>
                         </li>
@@ -144,15 +136,15 @@ export function Header() {
                   {/* Start Header Action Link */}
                   <ul className="header-action-link action-color--black action-hover-color--golden">
                     <li>
-                      <a href="#offcanvas-add-cart" className="offcanvas-toggle">
+                      <a href="/cart" className="offcanvas-toggle">
                         <i className="icon-bag" />
                         <span className="item-count">3</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="#search">
+                    <li className="d-flex"><input type="text" placeholder="Tìm kiếm nhanh"/>
+                      <div href="#search">
                         <i className="icon-magnifier" />
-                      </a>
+                      </div>
                     </li>
                     {!JwtToken ? (
                       <li>
@@ -161,8 +153,8 @@ export function Header() {
                     ) : (
                       <li>
                         <Dropdown>
-                          <Dropdown.Toggle variant="light" id="dropdown-basic" style={{ border: "none", backgroundColor: "transparent", color: "black" }}>
-                            <p style={{ marginTop: "26px" }} href="#offcanvas-about">
+                          <Dropdown.Toggle variant="light" id="dropdown-basic" style={{ border: "none", backgroundColor: "transparent", color: "#fef5ef" }}>
+                            <p style={{ marginTop: "26px", color:"black", marginTop:"48px" }} href="#offcanvas-about">
                               <i className="icon-user" />
                               <span style={{ color: "black" }}> {username}</span>
                             </p>

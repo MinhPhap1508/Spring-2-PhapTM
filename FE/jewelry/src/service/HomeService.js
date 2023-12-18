@@ -9,6 +9,14 @@ export const ListHome = async() => {
         console.log(e);
     }
 }
+export const BestSeller = async () => {
+    try{
+        const res = await axios.get("http://localhost:8080/product/best-seller")
+        return res.data;
+    }catch(e) {
+        console.log(e);
+    }
+}
 export const typeList = async() => {
     try{
         const res = await axios.get("http://localhost:8080/product/type")

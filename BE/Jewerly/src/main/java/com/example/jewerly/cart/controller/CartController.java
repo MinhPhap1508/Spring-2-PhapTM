@@ -34,4 +34,24 @@ public class CartController {
         cartService.addCart(quantity, username, productId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    @DeleteMapping("/delete-cart")
+    public ResponseEntity<?> delete (@RequestParam("id") Integer id,@RequestParam String username){
+        cartService.deleteCart(id, username);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/increase-quantity")
+    public ResponseEntity<?> increaseQuantity(@RequestParam String username,
+                                              @RequestParam Integer id,
+                                              @RequestParam Integer quantity) {
+        cartService.increaseQuantity(username, id, quantity);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/decrease-quantity")
+    public ResponseEntity<?> decreaseQuantity(@RequestParam String username,
+                                              @RequestParam Integer id) {
+        cartService.decreaseQuantity(username, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

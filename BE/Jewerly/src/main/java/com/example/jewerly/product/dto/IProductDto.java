@@ -13,7 +13,7 @@ public interface IProductDto {
     String getImage();
     String getDescription();
 
-    String getTrademark();
-    String getType();
-    String getCategory();
+    String getNameTrademark();
+    String getNameType();
+    String getNameCategory();
 }

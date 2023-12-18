@@ -1,5 +1,5 @@
 import axios from "axios"
-import jwtDecode from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 
 
 export const login = async(request) => {
@@ -19,6 +19,15 @@ export const infoToken = () => {
         return decodedToken;
     }else{
         return null;
+    }
+}
+export const getInfoCustomer = async(username) => {
+    try{
+        const res = await axios.get(`http://localhost:8080/customer?username=${username}`)
+        console.log("sservice", res);
+        return res.data;
+    }catch(e){
+        console.log(e);
     }
 }
 

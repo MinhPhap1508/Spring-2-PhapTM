@@ -36,6 +36,11 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    public List<IProductDto> getListBestSeller() {
+        return productRepository.getListBestseller();
+    }
+
+    @Override
     public List<Category> categoryList() {
         return categoryRepository.categoryList();
     }
@@ -53,5 +58,20 @@ public class ProductService implements IProductService{
     @Override
     public Page<IProductDto> getPageList(String nameProduct, String nameType, String nameCategory, String nameTrademark, Pageable pageable) {
         return productRepository.getListSearch(nameProduct, nameType, nameCategory, nameTrademark, pageable);
+    }
+
+    @Override
+    public Page<IProductDto>    getPageType(String nameType, Pageable pageable) {
+        return productRepository.getListType(nameType, pageable);
+    }
+
+    @Override
+    public Page<IProductDto> getPageCategory(String nameCategory, Pageable pageable) {
+        return productRepository.getListCategory(nameCategory, pageable);
+    }
+
+    @Override
+    public Page<IProductDto> getPageTrademark(String nameTrademark, Pageable pageable) {
+        return productRepository.getListTrademark(nameTrademark, pageable);
     }
 }

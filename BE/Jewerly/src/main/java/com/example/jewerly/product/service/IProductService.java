@@ -10,10 +10,20 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IProductService {
-IProductDto getProductById(Integer id);
-List<IProductDto> getListHome();
-List<Category> categoryList();
-List<Type> typeList();
-List<Trademark> trademarkList();
-Page<IProductDto> getPageList(String nameProduct, String nameType, String nameCategory, String nameTrademark, Pageable pageable);
+    IProductDto getProductById(Integer id);
+
+    List<IProductDto> getListHome();
+
+    List<IProductDto> getListBestSeller();
+
+    List<Category> categoryList();
+
+    List<Type> typeList();
+
+    List<Trademark> trademarkList();
+
+    Page<IProductDto> getPageList(String nameProduct, String nameType, String nameCategory, String nameTrademark, Pageable pageable);
+    Page<IProductDto> getPageType(String nameType, Pageable pageable);
+    Page<IProductDto> getPageCategory(String nameCategory, Pageable pageable);
+    Page<IProductDto> getPageTrademark(String nameTrademark, Pageable pageable);
 }
