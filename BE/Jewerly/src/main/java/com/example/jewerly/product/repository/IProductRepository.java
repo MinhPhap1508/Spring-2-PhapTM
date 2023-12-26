@@ -1,10 +1,7 @@
 package com.example.jewerly.product.repository;
 
 import com.example.jewerly.product.dto.IProductDto;
-import com.example.jewerly.product.model.Category;
-import com.example.jewerly.product.model.Product;
-import com.example.jewerly.product.model.Trademark;
-import com.example.jewerly.product.model.Type;
+import com.example.jewerly.product.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -67,9 +64,9 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
             " p.description as description, " +
             " p.price, " +
             " p.quantity, " +
-            " ct.name_category as category, " +
-            " t.name_type as type, " +
-            " tr.name_trademark as trademark" +
+            " ct.name_category as nameCategory, " +
+            " t.name_type as nameType, " +
+            " tr.name_trademark as nameTrademark" +
             " FROM product p " +
             "  JOIN category ct ON p.category_id = ct.id" +
             "  JOIN type t ON p.type_id = t.id " +
@@ -106,8 +103,7 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
             "                 FROM image sub_i\n" +
             "                 WHERE sub_i.product_id = p.id\n" +
             "                 ) " +
-            " GROUP BY p.id, p.code, p.name_product, p.price, t.name_type, ct.name_category, tr.name_trademark " +
-            " ORDER BY p.id ", nativeQuery = true)
+            " GROUP BY p.id, p.code, p.name_product, p.price, t.name_type, ct.name_category, tr.name_trademark " , nativeQuery = true)
     Page<IProductDto> getListSearch(@Param("nameProduct") String nameProduct,
                                     @Param("nameType") String nameType,
                                     @Param("nameCategory") String nameCategory,
@@ -189,4 +185,14 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     Page<IProductDto> getListTrademark(
                                     @Param("nameTrademark") String nameTrademark,
                                     Pageable pageable);
+    @Query(value = " SELECT p.*, t.name_type, ct.name_category, tr.name_trademark" +
+            " FROM product p " +
+            " JOIN type t on p.type_id = t.id" +
+            " JOIN category ct on p.category_id = ct.id" +
+            " JOIN trademark tr on p.trademark_id = tr.id", nativeQuery = true)
+    List<Product> findAllProduct();
+    @Query(value = "SELECT SUM(quantity_order) AS quantityOrder " +
+            "FROM order_detail\n" +
+            "WHERE product_id = :id;", nativeQuery = true)
+    IProductQuantity getQuantityOrder(@Param("id") Integer id);
 }

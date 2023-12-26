@@ -18,13 +18,18 @@ export const getListSearch = async (page, nameProduct, choose, search) => {
         console.log(e);
     }
 }
-export const getListHeader = async (page, nameProduct, nameType, nameCategory, nameTrademark) => {
+export const getListHeader = async (page, size, nameProduct, nameType, nameCategory, nameTrademark, sort, sortBy) => {
+    const specialCharactersRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-`]/;
+        if(specialCharactersRegex.test(nameProduct)){
+            return {status:204};
+        } else{
     try {
-        const res = await axios.get(`http://localhost:8080/product/page-header?page=${page}&size=4&nameProduct=${nameProduct}&nameType=${nameType}&nameCategory=${nameCategory}&nameTrademark=${nameTrademark}`)
+        const res = await axios.get(`http://localhost:8080/product/page-header?page=${page}&size=${size}&nameProduct=${nameProduct}&nameType=${nameType}&nameCategory=${nameCategory}&nameTrademark=${nameTrademark}&sort=${sort}&sortBy=${sortBy}`)
         return res;
     } catch (e) {
         console.log(e);
     }
+}
 }
 export const getSearchType = async(page,nameType) => {
     try{

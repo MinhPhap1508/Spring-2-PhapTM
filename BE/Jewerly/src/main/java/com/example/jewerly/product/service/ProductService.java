@@ -2,6 +2,7 @@ package com.example.jewerly.product.service;
 
 import com.example.jewerly.product.dto.IProductDto;
 import com.example.jewerly.product.model.Category;
+import com.example.jewerly.product.model.IProductQuantity;
 import com.example.jewerly.product.model.Trademark;
 import com.example.jewerly.product.model.Type;
 import com.example.jewerly.product.repository.ICategoryRepository;
@@ -73,5 +74,10 @@ public class ProductService implements IProductService{
     @Override
     public Page<IProductDto> getPageTrademark(String nameTrademark, Pageable pageable) {
         return productRepository.getListTrademark(nameTrademark, pageable);
+    }
+
+    @Override
+    public IProductQuantity getQuantityOrder(Integer id) {
+        return productRepository.getQuantityOrder(id);
     }
 }

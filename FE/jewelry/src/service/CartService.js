@@ -23,6 +23,10 @@ export const createOrder = async (cart, username) => {
     return res;
 }
 export const getListOrder = async(username, page) => {
-    const res = await axios.get(`http://localhost:8080/history?username=${username}&page=${page}`)
+    const res = await axios.get(`http://localhost:8080/orders/history?username=${username}&page=${page}`)
     return res
+}
+export const getDetailOrder = async(username, id) => {
+    const res = await axios.get(`http://localhost:8080/orders/detail?username=${username}&id=${id}`)
+    return res;
 }

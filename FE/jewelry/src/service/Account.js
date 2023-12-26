@@ -30,4 +30,18 @@ export const getInfoCustomer = async(username) => {
         console.log(e);
     }
 }
-
+export const getListOrder = async(username) => {
+    try{
+        const res = await axios.get(`http://localhost:8080/orders/history?username=username`)
+        return res;
+    }catch(e){
+        console.log(e);
+    }
+}
+export const createCustomer = async(username, customer) => {
+    try{
+        await axios.post(`http://localhost:8080/customer/update?username=${username}`,customer)
+    }catch(e){
+        console.log(e);
+    }
+}

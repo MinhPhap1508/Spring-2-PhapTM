@@ -16,6 +16,7 @@ export function Header() {
   const [cate, setCate] = useState([]);
   const [trade, setTrade] = useState([]);
   const navigate = useNavigate();
+  
 
   const getUsername = async () => {
     const res = await infoToken();
@@ -49,6 +50,12 @@ export function Header() {
     // navigate("/");
     // window.location.reload();
   }
+  // const login = async() => {
+  //   const res = infoToken();
+  //   if(res !== null) {
+  //     navigate("/")
+  //   }
+  // }
   useEffect(() => {
     getUsername();
     getType();
@@ -67,7 +74,7 @@ export function Header() {
                   {/* Start Header Logo */}
                   <div className="header-logo">
                     <div className="logo">
-                      <a href="/"><img src="assets/images/logo/logo_black.png" alt /></a>
+                      <Link to="/"><img src="img/MPLOGO.png" alt="" style={{scale:"3.5"}} /></Link>
                     </div>
                   </div>
                   {/* End Header Logo */}
@@ -76,11 +83,11 @@ export function Header() {
                     <nav>
                       <ul>
                         <li>
-                          <a href="/">Trang chủ</a>
+                          <Link to="/">Trang chủ</Link>
 
                         </li>
                         <li className="has-dropdown has-megaitem">
-                          <a href="#">Cửa hàng <i className="fa fa-angle-down" /></a>
+                          <Link to="#">Danh Mục <i className="fa fa-angle-down" /></Link>
                           {/* Mega Menu */}
                           <div className="mega-menu">
                             <ul className="mega-menu-inner">
@@ -124,10 +131,10 @@ export function Header() {
 
                     
                         <li>
-                          <a href="about-us.html">Thông tin thêm</a>
+                          <Link to="/product">Cửa Hàng</Link>
                         </li>
                         <li>
-                          <a href="contact-us.html">Liên hệ</a>
+                          <Link to="/cart">Giỏ hàng</Link>
                         </li>
                       </ul>
                     </nav>
@@ -135,7 +142,7 @@ export function Header() {
                   {/* End Header Main Menu Start */}
                   {/* Start Header Action Link */}
                   <ul className="header-action-link action-color--black action-hover-color--golden">
-                    <li>
+                    {/* <li>
                       <a href="/cart" className="offcanvas-toggle">
                         <i className="icon-bag" />
                         <span className="item-count">3</span>
@@ -145,26 +152,26 @@ export function Header() {
                       <div href="#search">
                         <i className="icon-magnifier" />
                       </div>
-                    </li>
+                    </li> */}
                     {!JwtToken ? (
                       <li>
-                        <a href="/login"><i className="icon-user" /></a>
+                        <Link to="/login"><i className="icon-user" /></Link>
                       </li>
                     ) : (
                       <li>
                         <Dropdown>
                           <Dropdown.Toggle variant="light" id="dropdown-basic" style={{ border: "none", backgroundColor: "transparent", color: "#fef5ef" }}>
-                            <p style={{ marginTop: "26px", color:"black", marginTop:"48px" }} href="#offcanvas-about">
+                            <p style={{ marginTop: "26px", color:"black", marginTop:"48px" }} href="#">
                               <i className="icon-user" />
                               <span style={{ color: "black" }}> {username}</span>
                             </p>
                           </Dropdown.Toggle>
                           <Dropdown.Menu>
-                            <Dropdown.Item href="/history">
-                              <div className="Phap-span" style={{ color: "black" }}><BiHistory /> Lịch sử đặt hàng</div>
+                            <Dropdown.Item>
+                              <Link to="/history" className="Phap-span"><BiHistory /> Lịch sử đặt hàng</Link>
                             </Dropdown.Item>
-                            <Dropdown.Item href="/customer">
-                              <div className="Phap-span"><BsInfoSquare /> Thông tin</div>
+                            <Dropdown.Item>
+                              <Link to="/customer" className="Phap-span"><BsInfoSquare /> Thông tin</Link>
                             </Dropdown.Item>
                             <Dropdown.Item>
                               <div className="Phap-span" onClick={() => handleLogout()}><BiLogOut /> Đăng xuất</div>

@@ -82,13 +82,11 @@ export function Home() {
                     </div>
                 </div>
 
-                <div className="container">
+                <div className="tab-pane active show sort-layout-single" id="layout-4-grid">
                     <div className="row">
-                        <div className="col-lg-12 d-flex">
-
-                            <Swiper
+                    <Swiper
                                 slidesPerView={4}
-                                spaceBetween={10}
+                                spaceBetween={20}
                                 freeMode={true}
                                 autoplay={{
                                     delay: 2000,
@@ -100,24 +98,43 @@ export function Home() {
                                 modules={[FreeMode, Pagination, Autoplay]}
                                 className="mySwiper"
                             >
-                            {product.map((p) => (
-                                <SwiperSlide>
-
-                                    <div className="card">
-                                        <img className="mx-auto img-thumbnail" src={p.image} />
-                                        <div className="card-body text-center mx-auto">
-                                            <div className="cvp">
-                                                <h5 className="card-title font-weight-bold">{p.nameProduct}</h5>
-                                                <p className="card-text price">{vnd.format(p.price)}</p>
-                                                <Link to={`/product/${p.id}`} className="btn details px-auto">Xem chi tiết</Link><br />
-                                                <button className="btn cart px-auto" onClick={() => addToCart(p)}>Thêm vào giỏ hàng</button>
+                        {product.map((p) => (
+                            <SwiperSlide>
+                            <div className="col-xl-3 col-lg-4 col-sm-6 col-12">
+                                {/* Start Product Default Single Item */}
+                                <div className="product-default-single-item product-color--golden mt-5" style={{width:"300px"}}>
+                                    <div className="image-box" style={{ boxShadow: "0 4px 10px 2px rgba(0, 0, 0, 0.1)", borderRadius: "20px"}}>
+                                        <Link to={`/product/${p.id}`} className="image-link" style={{paddingTop:"50px"}}>
+                                            <img src={p.image} alt />
+                                        </Link>
+                                        <div className="action-link">
+                                            <div className="action-link-left">
+                                                <button onClick={() => addToCart(p)} style={{ color: "white" }}>Thêm vào giỏ hàng</button>
+                                            </div>
+                                            <div className="action-link-right">
+                                                {/* <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i className="icon-magnifier" /></a>
+                                                <a href="wishlist.html"><i className="icon-heart" /></a>
+                                                <a href="compare.html"><i className="icon-shuffle" /></a> */}
                                             </div>
                                         </div>
                                     </div>
-                                </SwiperSlide>
-                            ))}
-                            </Swiper>
-                        </div>
+                                    <div className="content">
+                                        <div className="content-left">
+                                            <h6 className="title">{p.nameProduct}
+                                            </h6>
+                                        </div>
+
+                                    </div>
+                                    <div className="content mb-5">
+                                        <div className="content-right">
+                                            <span className="price">{vnd.format(p.price)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </SwiperSlide>
+                        ))}
+                        </Swiper>
                     </div>
                 </div>
 
@@ -157,9 +174,9 @@ export function Home() {
                                                 <button onClick={() => addToCart(p)} style={{ color: "white" }}>Thêm vào giỏ hàng</button>
                                             </div>
                                             <div className="action-link-right">
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i className="icon-magnifier" /></a>
+                                                {/* <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i className="icon-magnifier" /></a>
                                                 <a href="wishlist.html"><i className="icon-heart" /></a>
-                                                <a href="compare.html"><i className="icon-shuffle" /></a>
+                                                <a href="compare.html"><i className="icon-shuffle" /></a> */}
                                             </div>
                                         </div>
                                     </div>

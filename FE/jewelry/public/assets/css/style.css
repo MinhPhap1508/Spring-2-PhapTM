@@ -18265,7 +18265,7 @@ Pages - Contact
 .header-action-link li a {
     font-size: 21px;
     position: relative;
-    letter-spacing: -6px;
+    text-decoration: none;
 }
 
 .header-action-link li a span {

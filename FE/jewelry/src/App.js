@@ -12,6 +12,10 @@ import { Cart } from './components/Cart';
 import { List } from './components/List';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Product } from './components/Product';
+import { History } from './components/History';
+import { Customer } from './components/Customer';
+import { HistoryOrder } from './components/HistoryOrder';
 
 
 function App() {
@@ -28,6 +32,10 @@ function App() {
       <Route path='/type/:nameType' element={<List/>}/>
       <Route path='/category/:nameCategory' element={<List/>}/>
       <Route path='/trademark/:nameTrademark' element={<List/>}/>
+      <Route path='/product' element={<Product/>}/>
+      <Route path='/history' element={<History/>}/>
+      <Route path='/customer' element={<Customer/>}/>
+      <Route path='/order-detail/:id' element={<HistoryOrder/>}/>
     </Routes>
     <ToastContainer/>
     </>

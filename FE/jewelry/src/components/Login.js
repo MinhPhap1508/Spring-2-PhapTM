@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
-import { login } from '../service/Account';
+import { infoToken, login } from '../service/Account';
 import Swal from 'sweetalert2';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -72,8 +72,15 @@ export function Login() {
     //             switchBtn[i].removeEventListener("click", changeForm);
     //     };
     // }, []);
+    const cannotLogin = async () => {
+        const res = infoToken();
+        if(res !== null) {
+            navigate("/")
+        }
+    }
     useEffect(() => {
-        document.title = "MP Jewerly"
+        document.title = "Đăng nhập";
+        cannotLogin();
     }, [])
 
     return (
@@ -124,7 +131,7 @@ export function Login() {
                         <div className="switch__container" id="switch-c1">
                             <h2 className="switch__title title">Chào mừng quay trở lại !</h2>
                             <p className="switch__description description">Để duy trì kết nối với chúng tôi vui lòng đăng nhập bằng thông tin cá nhân của bạn</p>
-                            <button className="switch__button button switch-btn">Đăng nhập</button>
+                            <button className="switch__button button switch-btn">Đăng ký</button>
                         </div>
                         <div className="switch__container is-hidden" id="switch-c2">
                             <h2 className="switch__title title">Xin chào bạn !</h2>

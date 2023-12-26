@@ -2,6 +2,7 @@ package com.example.jewerly.product.service;
 
 import com.example.jewerly.product.dto.IProductDto;
 import com.example.jewerly.product.model.Category;
+import com.example.jewerly.product.model.IProductQuantity;
 import com.example.jewerly.product.model.Trademark;
 import com.example.jewerly.product.model.Type;
 import org.springframework.data.domain.Page;
@@ -26,4 +27,5 @@ public interface IProductService {
     Page<IProductDto> getPageType(String nameType, Pageable pageable);
     Page<IProductDto> getPageCategory(String nameCategory, Pageable pageable);
     Page<IProductDto> getPageTrademark(String nameTrademark, Pageable pageable);
+    IProductQuantity getQuantityOrder(Integer id);
 }

@@ -42,7 +42,7 @@ export function Paypal(props) {
                     }
                     Swal.fire("Thanh toán thành công!")
                     window.location.reload();
-                    console.log(order);
+                    console.log("order",order);
                 },
                 onError: (err) => {
                     console.log(err);

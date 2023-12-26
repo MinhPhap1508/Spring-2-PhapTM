@@ -7,6 +7,7 @@ import { infoToken } from "../service/Account";
 import { addCart } from "../service/CartService";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { cateList, tradeList, typeList } from "../service/HomeService";
 
 export function List() {
     const [page, setPage] = useState(0);
@@ -18,6 +19,13 @@ export function List() {
     const [nameCategory, setNameCategory] = useState("")
     const [nameTrademark, setNameTrademark] = useState("")
     const [nameProduct, setNameproduct] = useState("")
+    const [type, setType] = useState([]);
+    const [cate, setCate] = useState([]);
+    const [trade, setTrade] = useState([]);
+    const [selectedType, setSelectedType] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedTrademark, setSelectedTrademark] = useState("");
+
     const navigate = useNavigate();
 
     // const loadProductList = async () => {
@@ -74,6 +82,18 @@ export function List() {
             setPage((Prev) => Prev - 1);
         }
     };
+    const getType = async () => {
+        const res = await typeList()
+        setType(res);
+    }
+    const getCate = async () => {
+        const res = await cateList();
+        setCate(res);
+    }
+    const getTrade = async () => {
+        const res = await tradeList();
+        setTrade(res);
+    }
 
     const getParam = () => {
         if (param.nameType) {
@@ -118,6 +138,7 @@ export function List() {
     }
     useEffect(() => {
         getParam();
+        document.title = "Danh mục sản phẩm"
     }, [param.nameType, param.nameCategory, param.nameTrademark])
     useEffect(() => {
         if (nameType) {
@@ -127,11 +148,25 @@ export function List() {
         } else if (nameTrademark) {
             loadProductTrademark();
         }
-        window.scrollTo(0,340);
+        getCate();
+        getType();
+        getTrade();
+        window.scrollTo(0, 340);
     }, [page, nameType, nameCategory, nameTrademark])
+    // useEffect(() => {
+    //     if (selectedType) {
+    //         loadProductType();
+    //     } else if (selectedCategory) {
+    //         loadProductCategory();
+    //     } else if (selectedTrademark) {
+    //         loadProductTrademark();
+    //     }
+    //     // Các dependencies khác giữ nguyên
+    // }, [page, selectedType, selectedCategory, selectedTrademark]);
+
     return (
         <>
-            <Header />
+            <Header/>
             <div className="breadcrumb-section breadcrumb-bg-color--golden">
                 <div className="breadcrumb-wrapper">
                     <div className="container">
@@ -153,6 +188,45 @@ export function List() {
                 </div>
             </div>
             <div className="container">
+
+                {/* <div className="row">
+                    <div className="col-10">
+                        <h5>Bộ lọc:</h5>
+                        <div className="row">
+                            <div className="col-4">
+                                <select onChange={(e) => setSelectedCategory(e.target.value)}>
+                                    <option value="">Loại trang sức</option>
+                                    {cate.map((ct) => (
+                                        <option key={ct.id} value={ct.id}>{ct.nameCategory}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="col-4">
+                                <select onChange={(e) => setSelectedType(e.target.value)}>
+                                    <option value="">Chất liệu</option>
+                                    {type.map((t) => (
+                                        <option key={t.id} value={t.id}>{t.nameType}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="col-4">
+                                <select onChange={(e) => setSelectedTrademark(e.target.value)}>
+                                    <option value="">Thương hiệu</option>
+                                    {trade.map((t) => (
+                                        <option key={t.id} value={t.id}>{t.nameTrademark}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className="col-2">
+                        <h5>Sắp xếp:</h5>
+
+                    </div>
+
+                </div> */}
+
                 <div className="tab-pane active show sort-layout-single" id="layout-4-grid">
                     <div className="row">
                         {product.map((p) => (
@@ -167,11 +241,11 @@ export function List() {
                                             <div className="action-link-left">
                                                 <button onClick={() => addToCart(p)} style={{ color: "white" }}>Thêm vào giỏ hàng</button>
                                             </div>
-                                            <div className="action-link-right">
+                                            {/* <div className="action-link-right">
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#modalQuickview"><i className="icon-magnifier" /></a>
                                                 <a href="wishlist.html"><i className="icon-heart" /></a>
                                                 <a href="compare.html"><i className="icon-shuffle" /></a>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                     <div className="content">

@@ -3,11 +3,11 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { useNavigate } from "react-router-dom";
 import { getInfoCustomer, infoToken } from "../service/Account";
-import { addCart, cartDetail, deleteCart } from "../service/CartService";
+import { addCart, cartDetail, decrease, deleteCart } from "../service/CartService";
 import { Paypal } from "./Paypal";
 import Swal from "sweetalert2";
-import {FaPlus} from "react-icons/fa6";
-import {FaMinus} from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa6";
 
 export function Cart() {
     const [cart, setCart] = useState([])
@@ -67,10 +67,47 @@ export function Cart() {
         await addCart(1, res.sub, productId)
         getCart();
     }
+    const handleDecrease = async (c) => {
+        let quantity = document.getElementById("input-quantity" + c.id)
+        try {
+            if (quantity.value <= 1) {
+                Swal.fire({
+                    title: "Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?",
+                    text: c.name,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Đồng ý",
+                    cancelButtonText: "Huỷ",
+                })
+                    .then(async (confirm) => {
+                        if (confirm.isConfirmed) {
+                            const res = infoToken();
+                            await deleteCart(res.sub, c.id)
+                            Swal.fire("Xóa sản phẩm thành công!", "", "success");
+                            getCart();
+                        }
+                    })
+            }
+            if (quantity.value > 1) {
+                // setQuantity(quantity - 1);
+                quantity.value = parseInt(quantity.value) - 1;
+                const res = infoToken();
+                await decrease(res.sub, c.id)
+                getCart();
+            }
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    };
     useEffect(() => {
         getCart();
         getCustomer();
-        document.title = "Minh Pháp Jewelry"
+        window.scrollTo(0, 0)
+        document.title = "Giỏ hàng của bạn"
     }, [])
 
     return (
@@ -96,38 +133,44 @@ export function Cart() {
                                                     <th className="product_total">Tổng tiền</th>
                                                 </tr>
                                             </thead> {/* End Cart Table Head */}
-                                            {cart.map((c) => (
-                                                <>
-                                                    <tbody>
+                                            {cart.length > 0 ? (
+                                                cart.map((c) => (
+                                                    <>
+                                                        <tbody>
 
-                                                        {/* Start Cart Single Item*/}
-                                                        <tr>
-                                                            <td className="product_remove"><a onClick={() => handleDelete(c, c.name)}><i className="fa fa-trash-o" /></a>
-                                                            </td>
-                                                            <td className="product_thumb"><a href="product-details-default.html"><img src={c.image} alt /></a></td>
-                                                            <td className="product_name"><p>{c.name}</p></td>
-                                                            <td className="product-price">{vnd.format(c.price)}</td>
-                                                            <td className="product_quantity"><label> <input min="1" max="100"
-                                                            id={`input-quantity${c.id}`}
-                                                            name="quantity"
-                                                            value={c.quantity}
-                                                             defaultValue={c.quantity}
-                                                              type="number" />
-                                                              </label>
-                                                            <span className="btn btn-outline-dark" style={{width:"50px", marginBottom:"4px"}} onClick={() => increase(c.id)}>
-                                                            <FaPlus/>
-                                                                </span>
-                                                            </td>
-                                                            <td className="product_total">{vnd.format(c.price * c.quantity)}</td>
-                                                        </tr> {/* End Cart Single Item*/}
+                                                            {/* Start Cart Single Item*/}
+                                                            <tr>
+                                                                <td className="product_remove"><a onClick={() => handleDelete(c, c.name)}><i className="fa fa-trash-o" /></a>
+                                                                </td>
+                                                                <td className="product_thumb"><a href="product-details-default.html"><img src={c.image} alt /></a></td>
+                                                                <td className="product_name"><p>{c.name}</p></td>
+                                                                <td className="product-price">{vnd.format(c.price)}</td>
+                                                                <td className="product_quantity">
+                                                                    <span className="btn btn-outline-dark" style={{ width: "50px", marginBottom: "4px" }} onClick={() => handleDecrease(c)}>
+                                                                        <FaMinus />
+                                                                    </span>
+                                                                    <label> <input min="1" max="100"
+                                                                        id={`input-quantity${c.id}`}
+                                                                        name="quantity"
+                                                                        value={c.quantity}
+                                                                        defaultValue={c.quantity}
+                                                                        type="number" />
+                                                                    </label>
+                                                                    <span className="btn btn-outline-dark" style={{ width: "50px", marginBottom: "4px" }} onClick={() => increase(c.id)}>
+                                                                        <FaPlus />
+                                                                    </span>
+                                                                </td>
+                                                                <td className="product_total">{vnd.format(c.price * c.quantity)}</td>
+                                                            </tr> {/* End Cart Single Item*/}
 
-                                                    </tbody>
-                                                </>
-                                            ))}
+                                                        </tbody>
+                                                    </>
+                                                ))
+                                            ) : (<h5 className="text-center mt-5">Giỏ hàng của bạn đang trống</h5>)}
                                         </table>
                                     </div>
                                     <div className="cart_submit">
-                                        <button className="btn btn-md btn-golden" type="submit">Thay đổi giỏ hàng</button>
+                                        <a href="/product" className="btn btn-md btn-golden" type="submit">Tiếp tục mua sắm</a>
                                     </div>
                                 </div>
                             </div>
@@ -169,18 +212,23 @@ export function Cart() {
                                             {/* <p>Shipping</p>
                                             <p className="cart_amount"><span>Flat Rate:</span> $255.00</p> */}
                                         </div>
-                                        <div className="cart_subtotal">
+                                        {/* <div className="cart_subtotal">
                                             <p>Tổng tiền sau khi cộng thêm chi đó</p>
                                             <p className="cart_amount">{vnd.format(totalPrice)}</p>
-                                        </div>
-                                        {checkout ? (
-                                            <Paypal props1={totalPrice} props2={cart} />
-                                        ) : (
-                                            <div className="checkout_btn">
+                                        </div> */}
+                                        {cart.length > 0 ? (
+                                            checkout ? (
+                                                <Paypal props1={totalPrice} props2={cart} />
+                                            ) : (
+                                                <div className="checkout_btn">
 
-                                                <button
-                                                    onClick={() => setCheckout(true)} className="btn btn-md btn-golden">Thanh toán</button>
+                                                    <button
+                                                        onClick={() => setCheckout(true)} className="btn btn-md btn-golden">Thanh toán</button>
 
+                                                </div>
+                                            )) : (
+                                            <div className="cart_submit">
+                                                <a href="/product" className="btn btn-md btn-golden float-end" type="submit">Đi đến cửa hàng</a>
                                             </div>
                                         )}
                                     </div>

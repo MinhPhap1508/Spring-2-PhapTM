@@ -2,6 +2,7 @@ package com.example.jewerly.product.controller;
 
 import com.example.jewerly.product.dto.IProductDto;
 import com.example.jewerly.product.model.Category;
+import com.example.jewerly.product.model.IProductQuantity;
 import com.example.jewerly.product.model.Trademark;
 import com.example.jewerly.product.model.Type;
 import com.example.jewerly.product.service.IProductService;
@@ -26,6 +27,10 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findProductById(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
+    }
+    @GetMapping("/quantity/{id}")
+    public ResponseEntity<?> getQuantity (@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(productService.getQuantityOrder(id), HttpStatus.OK);
     }
 
     @GetMapping("/home")
@@ -57,7 +62,7 @@ public class ProductController {
                                                     @RequestParam(defaultValue = "", required = false) String nameTrademark
     ) {
 //        Sort sort1 = Sort.by(Sort.Direction.fromString(sort), sortBy);
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
         Page<IProductDto> productDtoPage;
         switch (choose) {
             case "nameType":
@@ -84,10 +89,12 @@ public class ProductController {
                                                     @RequestParam(defaultValue = "", required = false) String nameProduct,
                                                     @RequestParam(defaultValue = "", required = false) String nameType,
                                                     @RequestParam(defaultValue = "", required = false) String nameCategory,
-                                                    @RequestParam(defaultValue = "", required = false) String nameTrademark
+                                                    @RequestParam(defaultValue = "", required = false) String nameTrademark,
+                                                    @RequestParam(defaultValue = "asc", required = false) String sort,
+                                                    @RequestParam(defaultValue = "price", required = false) String sortBy
     ) {
-//        Sort sort1 = Sort.by(Sort.Direction.fromString(sort), sortBy);
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort1 = Sort.by(Sort.Direction.fromString(sort), sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort1);
         Page<IProductDto> productDtoPage = productService.getPageList(nameProduct, nameType, nameCategory, nameTrademark, pageable);
         if(productDtoPage.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -157,4 +164,5 @@ public class ProductController {
         }
         return new ResponseEntity<>(productDtoPage, HttpStatus.OK);
     }
+
 }

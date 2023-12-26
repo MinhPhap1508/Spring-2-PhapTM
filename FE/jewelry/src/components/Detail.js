@@ -3,23 +3,63 @@ import { getProductById } from "../service/ProductService";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { infoToken } from "../service/Account";
+import { addCart } from "../service/CartService";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { FaPlus } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa6";
 
 export function Detail() {
     const [product, setProduct] = useState(null);
     const param = useParams();
+    const navigate = useNavigate();
     const [images, setImages] = useState([]);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [quantity, setQuantity] = useState(1);
+    const [maxQuantity, setMaxQuantity] = useState(0);
+
+
+
     const vnd = new Intl.NumberFormat('vi-VN', {
         style: 'currency',
         currency: 'VND'
     })
+    const changeImage = (index) => {
+        setCurrentImageIndex(index);
+    };
+
     const getProduct = async (id) => {
         const res = await getProductById(id);
         const temp = res.data.image.split(",");
         console.log("data", res);
         setProduct(res.data);
         setImages(temp);
+        setMaxQuantity(res.data.quantity);
     }
+    const addToCart = async (value) => {
+        const res = infoToken();
+        if (res != null) {
+            if(quantity <= maxQuantity) {
+            const result = await addCart(quantity, res.sub, value.id)
+            toast("Thêm sản phẩm thành công")
+            } else {
+                Swal.fire("Số lượng sản phẩm trong kho không đủ")
+            }
+        } else {
+            Swal.fire("Vui lòng đăng nhập")
+            navigate("/login")
+        }
+    }
+    const increaseQuantity = () => {
+        setQuantity(quantity + 1);
+    };
+    const decreaseQuantity = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
     useEffect(() => {
         getProduct(param.id);
         window.scrollTo(0, 320);
@@ -61,8 +101,8 @@ export function Detail() {
                                                 <div className="swiper-wrapper" style={{ width: "400px", height: "400px" }}>
                                                     {images.length > 0 &&
                                                         images.map((i, index) => (
-                                                            <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
-                                                                <img style={{ objectFit: "cover", width: "100%", height: "100%" }} src={i}
+                                                            <div key={index} className={`carousel-item ${index === currentImageIndex ? "active" : ""}`}>
+                                                                <img style={{ objectFit: "cover", width: "100%", height: "100%", marginLeft: "5rem", backgroundColor: "whiteSmoke" }} src={i}
                                                                     alt="..." />
                                                             </div>
 
@@ -77,19 +117,17 @@ export function Detail() {
                                                     {images.length > 0 &&
                                                         images.map((i, index) => (
                                                             <button
+                                                                key={index}
                                                                 type="button"
-                                                                data-bs-target="#carouselExampleIndicators"
-                                                                data-bs-slide-to={index}
-                                                                className={index === 0 ? "active" : ""}
-                                                                aria-current="true"
+                                                                onClick={() => changeImage(index)}
+                                                                className={index === currentImageIndex ? "active" : ""}
                                                                 aria-label={`Slide ${index + 1}`}
-                                                                // style={{ width: 60, height: 70 }}
                                                             >
                                                                 <img
                                                                     src={i}
                                                                     alt="..."
                                                                     className="d-block"
-                                                                    style={{ border: "1px pink solid" ,margin :"5px",width:"95%"}}
+                                                                    style={{ border: "1px pink solid", margin: "0 27px 0", width: "80%" }}
                                                                 />
                                                             </button>
 
@@ -97,22 +135,22 @@ export function Detail() {
 
                                                 </div>
                                                 {/* Add Arrows */}
-                                                <button
+                                                {/* <button
                                                     className="carousel-control-prev"
                                                     type="button"
                                                     data-bs-target="#carouselExampleIndicators"
                                                     data-bs-slide="prev"
                                                 >
-                                                    {/* <span className="carousel-control-prev-icon" aria-hidden="true" />
-                                                    <span className="visually-hidden">Previous</span> */}
-                                                </button>
-                                                <button className="carousel-control-next"
+                                                    <span className="carousel-control-prev-icon" aria-hidden="true" />
+                                                    <span className="visually-hidden">Previous</span>
+                                                </button> */}
+                                                {/* <button className="carousel-control-next"
                                                     type="button"
                                                     data-bs-target="#carouselExampleIndicators"
                                                     data-bs-slide="next">
-                                                    {/* <span className="carousel-control-next-icon" aria-hidden="true" />
-                                                    <span className="visually-hidden">Next</span> */}
-                                                </button>
+                                                    <span className="carousel-control-next-icon" aria-hidden="true" />
+                                                    <span className="visually-hidden">Next</span>
+                                                </button> */}
                                                 {/* <div className="gallery-thumb-arrow swiper-button-next" />
                                                 <div className="gallery-thumb-arrow swiper-button-prev" /> */}
                                             </div>
@@ -123,15 +161,21 @@ export function Detail() {
                                         <div className="product-details-content-area product-details--golden" data-aos="fade-up" data-aos-delay={200}>
                                             {/* Start  Product Details Text Area*/}
                                             <div className="product-details-text">
-                                                <h4 className="title">{product.nameProduct}</h4>
-                                                <h6 className="product-ref ">Thương hiệu: <span>{product.trademark}</span></h6>
-                                                <div className="price">Giá: {vnd.format(product.price)}</div>
-                                                <p>{product.description}</p>
+                                                <h4 style={{fontFamily:"display"}} className="title">{product.nameProduct}</h4>
+                                                <h5 style={{fontFamily:"monaco"}} className="product-ref ">Thương hiệu: <span>{product.nameTrademark}</span></h5>
+                                                <h5 style={{fontFamily:"monaco"}} className="product-ref ">Dòng sản phẩm: <span>{product.nameCategory} {product.nameType}</span></h5>
+                                                {/* <p>{product.description}</p> */}
                                             </div> {/* End  Product Details Text Area*/}
+                                            <div>
+                                                <h5 style={{fontFamily:"monaco"}}>Số lượng còn lại trong kho: {product.quantity}</h5>
+                                            </div>
+                                            <h5 style={{fontFamily:"monaco"}}>{product.code}  {product.nameProduct}</h5>
+                                            <h2 style={{fontFamily:"monaco", fontWeight:"bold"}} className="price h-5">Giá: {vnd.format(product.price)}</h2>
+
                                             {/* Start Product Variable Area */}
                                             <div className="product-details-variable">
                                                 {/* Product Variable Single Item */}
-                                                <div className="variable-single-item">
+                                                {/* <div className="variable-single-item">
                                                     <span>Kích cỡ</span>
                                                     <select className="product-variable-size">
                                                         <option selected value={1}> Chọn kích cỡ</option>
@@ -141,18 +185,28 @@ export function Detail() {
                                                         <option value={5}>12</option>
                                                         <option value={6}>13</option>
                                                     </select>
-                                                </div>
+                                                </div> */}
                                                 {/* Product Variable Single Item */}
-                                                <div className="d-flex align-items-center ">
-                                                    <div className="variable-single-item ">
-                                                        <span>Số lượng</span>
+                                                <div className="align-items-center ">
+                                                    {/* <h5>Số lượng</h5> */}
+
+                                                    <div className="variable-single-item d-flex mt-2">
+                                                        <span className="btn btn-outline-dark" style={{ width: "50px", marginBottom: "4px" }} onClick={decreaseQuantity}>
+                                                            <FaMinus />
+                                                        </span>
                                                         <div className="product-variable-quantity">
-                                                            <input min={1} max={100} defaultValue={1} type="number" />
+                                                            <input style={{ padding: "8px", textAlign: "center", marginLeft: "1rem" }}
+                                                                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                                                                min={1} max={100} value={quantity} type="number" />
                                                         </div>
+                                                        <span className="btn btn-outline-dark" style={{ width: "50px", marginBottom: "4px" }} onClick={increaseQuantity}>
+                                                            <FaPlus />
+                                                        </span>
                                                     </div>
-                                                    <div className="product-add-to-cart-btn">
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart"> Thêm vào giỏ hàng</a>
-                                                    </div>
+
+                                                </div>
+                                                <div className="product-add-to-cart-btn text-light">
+                                                    <a onClick={() => addToCart(product)}> Thêm vào giỏ hàng</a>
                                                 </div>
                                             </div>
                                         </div>
